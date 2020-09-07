@@ -1,0 +1,22 @@
+package com.chen;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+@MapperScan("com.chen.mapper")
+public class NettyApplication {
+
+	public static void main(String[] args) {
+
+		ApplicationContext context = SpringApplication.run(NettyApplication.class, args);
+
+		ServerStartup startup = context.getBean(ServerStartup.class);
+
+		startup.start();   
+	}
+}
+
+ 
