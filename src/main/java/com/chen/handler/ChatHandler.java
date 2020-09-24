@@ -5,7 +5,7 @@ import org.springframework.beans.BeanUtils;
 import com.chen.entity.OfflineMsg;
 import com.chen.logic.AbstractPacket;
 import com.chen.logic.AllEnums;
-import com.chen.logic.ChatPacket;
+import com.chen.logic.ChatMsgPacket;
 import com.chen.logic.PacketType;
 import com.chen.logic.ReceiptPacket;
 import com.chen.logic.SessionManager;
@@ -27,7 +27,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		}
 		System.err.println("聊天包");
 		
-		ChatPacket chatPacket = (ChatPacket) packet;
+		ChatMsgPacket chatPacket = (ChatMsgPacket) packet;
 
 		if (chatPacket.getMsg_type() == AllEnums.MsgType_Image) {
 			chatPacket.setWeb_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getWeb_url());
@@ -45,8 +45,11 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		ReceiptPacket receipt = new ReceiptPacket();
 		BeanUtils.copyProperties(chatPacket, receipt);
 		receipt.setMsg_status(AllEnums.MsgStatus_Sent);
+		
 		try {
+			
 			offlineMsgMapper.insertSelective(record);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			receipt.setMsg_status(AllEnums.MsgStatus_Failed); // 回执,设置为失败

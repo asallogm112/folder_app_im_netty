@@ -12,7 +12,7 @@ public class UserSession {
 
 	private Channel channel;
 
-	public void sendMsgTo(ChatPacket msg) {
+	public void sendMsgTo(ChatMsgPacket msg) {
 		msg.setMsg_status(AllEnums.MsgStatus_Sent);
 		channel.writeAndFlush(msg);
 		System.err.println("isActive : " + channel.isActive());

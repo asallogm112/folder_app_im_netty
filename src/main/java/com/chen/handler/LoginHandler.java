@@ -8,7 +8,7 @@ import com.chen.entity.OfflineMsg;
 import com.chen.entity.User;
 import com.chen.logic.AbstractPacket;
 import com.chen.logic.AsyncTask;
-import com.chen.logic.ChatPacket;
+import com.chen.logic.ChatMsgPacket;
 import com.chen.logic.LoginPacket;
 import com.chen.logic.PacketType;
 import com.chen.logic.SessionManager;
@@ -28,7 +28,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			ctx.fireChannelRead(packet);
 			return;
 		}
- 
+
 		System.err.println("登录包");
 		LoginPacket login = (LoginPacket) packet;
 
@@ -39,11 +39,12 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		session.setChannel(ctx.channel());
 		session.setUser(user);
 
-		UserSession isExisted = SessionManager.getSessionBy(login.getUser_id());
-
+		UserSession existSession = SessionManager.getSessionBy(login.getUser_id());
+		
 		OfflineMsgMapper offlineMsgMapper = SpringContext.getBean(OfflineMsgMapper.class);
 		List<OfflineMsg> offlineMsgs = offlineMsgMapper.selectByReceiverId(login.getUser_id());
 
+		//对方上线之后 , 给他发送离线消息 (异步)
 		if (offlineMsgs != null && offlineMsgs.size() > 0) {
 			AsyncTask task = SpringContext.getBean(AsyncTask.class);
 			task.addTask(new Runnable() {
@@ -51,7 +52,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 				@Override
 				public void run() {
 					for (OfflineMsg offlineMsg : offlineMsgs) {
-						ChatPacket chat = new ChatPacket();
+						ChatMsgPacket chat = new ChatMsgPacket();
 						BeanUtils.copyProperties(offlineMsg, chat);
 						session.sendMsgTo(chat);
 					}
@@ -59,11 +60,9 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			});
 		}
 
-		if (isExisted == null) {
-
+		if (existSession == null) {
 			SessionManager.registerSession(session);
 			ctx.pipeline().remove(this);
-
 		} else {
 			SessionManager.removeSession(login.getUser_id());
 			SessionManager.registerSession(session);

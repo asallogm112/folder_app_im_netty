@@ -32,7 +32,7 @@ public class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
 				System.err.println("available:" + available);
 			}
 
-			System.err.println("decode : " + packetType + "--" + available); 
+			System.err.println("decode : " + packetType + "--" + available);
 
 			if (packetType == PacketType.PacketType_HeartBeat.getPacketType()) {
 

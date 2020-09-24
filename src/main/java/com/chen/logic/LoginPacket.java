@@ -16,8 +16,7 @@ public class LoginPacket extends AbstractPacket {
 	private String open_id;
 	private String alipay_id;
 	private String gender;
-	 
-
+	  
 	@Override
 	public int getPacketType() {
 		return PacketType.PacketType_Login.getPacketType();
