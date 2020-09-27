@@ -54,7 +54,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 					for (OfflineMsg offlineMsg : offlineMsgs) {
 						ChatMsgPacket chat = new ChatMsgPacket();
 						BeanUtils.copyProperties(offlineMsg, chat);
-						session.sendMsgTo(chat);
+						session.sendChannelMsg(chat);
 					}
 				}
 			});

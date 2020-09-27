@@ -25,7 +25,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			ctx.fireChannelRead(packet);
 			return;
 		}
-		System.err.println("聊天包");
+		System.err.println("聊天消息");
 		
 		ChatMsgPacket chatPacket = (ChatMsgPacket) packet;
 
@@ -48,20 +48,20 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		
 		try {
 			
-			offlineMsgMapper.insertSelective(record);
+			offlineMsgMapper.insertSelective(record); //插入离线消息,防止丢消息
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			receipt.setMsg_status(AllEnums.MsgStatus_Failed); // 回执,设置为失败
-		}
-
+			receipt.setMsg_status(AllEnums.MsgStatus_Failed); // 回执,设置为此消息发送失败
+		} 
+		
 		if (session != null) {
-			session.sendMsgTo(chatPacket);
-			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 如果在线 ,成功
+			session.sendChannelMsg(chatPacket);
+			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 插入数据库失败,但是在线 ,回执 设为成功
 		} else {
 			//todo apns or android push
-		}
-		ctx.channel().writeAndFlush(receipt);
+		} 
+		ctx.channel().writeAndFlush(receipt); 
 	}
 
 }

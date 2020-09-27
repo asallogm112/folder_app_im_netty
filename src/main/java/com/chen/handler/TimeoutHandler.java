@@ -29,6 +29,7 @@ public class TimeoutHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();
+		System.err.println("exceptionCaught");
 	}
 
 	@Override

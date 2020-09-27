@@ -12,9 +12,11 @@ public class UserSession {
 
 	private Channel channel;
 
-	public void sendMsgTo(ChatMsgPacket msg) {
+	public void sendChannelMsg(ChatMsgPacket msg) {
+		
 		msg.setMsg_status(AllEnums.MsgStatus_Sent);
 		channel.writeAndFlush(msg);
+		
 		System.err.println("isActive : " + channel.isActive());
 		System.err.println("isOpen : " + channel.isOpen());
 		System.err.println("isWritable : " + channel.isWritable());

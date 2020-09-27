@@ -18,6 +18,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
@@ -34,16 +35,19 @@ public class ServerStartup {
 
 			protected void initChannel(Channel ch) throws Exception {
 				ChannelPipeline pipe = ch.pipeline();
-				
+
 				int maxFrameLength = 1024 * 1024 * 4;
-//				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4)); 
+				int idleSeconds = 30;
+
+				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4));
+				pipe.addLast("IdleStateHandler", new IdleStateHandler(idleSeconds, 0, 0)); // idleSeconds = 30秒 未写超时
 				pipe.addLast("PacketDecoder", new PacketDecoder());
 				pipe.addLast("PacketEncoder", new PacketEncoder());
 				pipe.addLast("LoginHandler", new LoginHandler());
 				pipe.addLast("ChatHandler", new ChatHandler());
 				pipe.addLast("ReceiptHandler", new ReceiptHandler());
 				pipe.addLast("TimeoutHandler", new TimeoutHandler());
-				pipe.addLast("IdleStateHandler", new IdleStateHandler(10, 0, 0)); //10秒 写超时
+
 			};
 		});
 
