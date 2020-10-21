@@ -32,7 +32,7 @@ steps:
       - docker rm -f app_im
       - docker rmi app_im
       - cd /app_im/target
-      - docker build -t app_im -f ../dockerfile_web .
+      - docker build -t app_im -f ../dockerfile_im .
       - docker run -itd --name=app_im -p 2222:2222  app_im
       - docker logs app_im
    
