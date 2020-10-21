@@ -43,7 +43,7 @@ steps:
     corp_secret: TL0OS_OoNpXVAO4hUk8iYadb8vOLIe-H_Iqkfy1Lb8Y
     agent_id: 1000002
     title: ${DRONE_REPO_NAME}
-    description: "${DRONE_BUILD_NUMBER} : ${DRONE_BUILD_STATUS} "
+    description: "${DROBE_REPO_NAME} - ${DRONE_BUILD_NUMBER} - ${DRONE_BUILD_STATUS} "
     btn_txt: anniu
     msg_url: ${DRONE_BUILD_LINK}
     when:
