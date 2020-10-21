@@ -1,9 +1,6 @@
 
 server:
   port: 2222
-
-#  servlet:
-#    context-path: /api/v1/
   
 
 spring:
