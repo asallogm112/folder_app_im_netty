@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: automatic
+name: cicd
 
 steps:
 - name: mvn package
