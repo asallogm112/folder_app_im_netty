@@ -46,6 +46,8 @@ steps:
     description: "${DRONE_BUILD_NUMBER} : ${DRONE_BUILD_STATUS} "
     btn_txt: anniu
     msg_url: ${DRONE_BUILD_LINK}
+    when:
+      status: [ failure , success ]
     
 volumes:
 - name: mvn_settings
