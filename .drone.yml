@@ -1,0 +1,53 @@
+kind: pipeline
+type: docker
+name: automatic
+
+steps:
+- name: mvn package
+  image: maven
+  volumes:
+  - name: mvn_settings
+    path: /root/.m2/ 
+  commands:  
+  - mvn clean package -DskipTests=true
+
+- name: scp files
+  image: appleboy/drone-scp
+  settings:
+    host: 175.24.190.65
+    username: root
+    password: asa112llo.l
+    port: 22
+    target: /app_im
+    source: ./target/app-1.0.jar 
+    
+- name: ssh_cmd
+  image: appleboy/drone-ssh
+  settings:
+    host: 175.24.190.65
+    username: root 
+    password: asa112llo.l
+    port: 22
+    script:
+      - docker rm -f app_im
+      - docker rmi app_im
+      - cd /app_im/target
+      - docker build -t app_im -f ../dockerfile_web .
+      - docker run -itd --name=app_im -p 1111:80  app_im
+      - docker logs app_im
+   
+- name: notice
+  image: clem109/drone-wechat
+  settings:
+    corpid: wwa5227aa993f17c36
+    corp_secret: TL0OS_OoNpXVAO4hUk8iYadb8vOLIe-H_Iqkfy1Lb8Y
+    agent_id: 1000002
+    title: ${DRONE_REPO_NAME}
+    description: "${DRONE_BUILD_NUMBER} : ${DRONE_BUILD_STATUS} "
+    btn_txt: anniu
+    msg_url: ${DRONE_BUILD_LINK}
+    
+volumes:
+- name: mvn_settings
+  host: 
+    path: /root/
