@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: aaac
+name: aaacdsa
 
 steps:
 - name: mvn package
