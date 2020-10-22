@@ -1,5 +1,6 @@
 package com.chen;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.chen.handler.ChatHandler;
@@ -23,7 +24,10 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 public class ServerStartup {
-
+	
+	@Value("${server.port}")
+	private int port;
+ 
 	public void start() {
 		PacketType.initPackets();
 
@@ -55,7 +59,7 @@ public class ServerStartup {
 		server.childOption(ChannelOption.SO_BACKLOG, 1024);
 
 		try {
-			server.bind(2222).sync().channel().closeFuture().sync();
+			server.bind(port).sync().channel().closeFuture().sync();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
