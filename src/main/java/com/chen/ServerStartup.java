@@ -55,7 +55,7 @@ public class ServerStartup {
 		server.childOption(ChannelOption.SO_BACKLOG, 1024);
 
 		try {
-			server.bind(5555).sync().channel().closeFuture().sync();
+			server.bind(2222).sync().channel().closeFuture().sync();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
