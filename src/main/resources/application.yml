@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    username: root
+    username: im
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://175.24.190.65:3306/db_im
