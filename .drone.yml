@@ -9,7 +9,7 @@ steps:
   - name: mvn_settings
     path: /root/.m2/ 
   commands:  
-  - mvn clean package -DskipTests=true
+  - mvn clean package -DskipTests=true -e
 
 - name: scp files
   image: appleboy/drone-scp
