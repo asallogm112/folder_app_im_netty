@@ -3,7 +3,7 @@ package com.chen.mapper;
 import java.util.List;
 
 import com.chen.entity.OfflineMsg;
-import com.chen.logic.ReceiptPacket;
+import com.chen.packet.ReceiptPacket;
 
 public interface OfflineMsgMapper {
 	int deleteByPrimaryKey(Integer id);

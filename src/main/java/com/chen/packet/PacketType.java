@@ -1,4 +1,4 @@
-package com.chen.logic;
+package com.chen.packet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ public enum PacketType {
 		this.packetClass = packetClass;
 	}
 
-	public static void initPackets() {
+	public static void initPacketTypes() {
 
 		for (PacketType packet : PacketType.values()) {
 			int type = packet.getPacketType(); 

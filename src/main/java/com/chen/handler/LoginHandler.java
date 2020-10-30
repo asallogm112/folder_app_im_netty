@@ -6,15 +6,15 @@ import org.springframework.beans.BeanUtils;
 
 import com.chen.entity.OfflineMsg;
 import com.chen.entity.User;
-import com.chen.logic.AbstractPacket;
 import com.chen.logic.AsyncTask;
-import com.chen.logic.ChatMsgPacket;
-import com.chen.logic.LoginPacket;
-import com.chen.logic.PacketType;
 import com.chen.logic.SessionManager;
 import com.chen.logic.SpringContext;
 import com.chen.logic.UserSession;
 import com.chen.mapper.OfflineMsgMapper;
+import com.chen.packet.AbstractPacket;
+import com.chen.packet.ChatMsgPacket;
+import com.chen.packet.LoginPacket;
+import com.chen.packet.PacketType;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -46,6 +46,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
 		//对方上线之后 , 给他发送离线消息 (异步)
 		if (offlineMsgs != null && offlineMsgs.size() > 0) {
+			
 			AsyncTask task = SpringContext.getBean(AsyncTask.class);
 			task.addTask(new Runnable() {
 

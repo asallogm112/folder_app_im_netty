@@ -1,6 +1,8 @@
 package com.chen.logic;
 
 import com.chen.entity.User;
+import com.chen.packet.AllEnums;
+import com.chen.packet.ChatMsgPacket;
 
 import io.netty.channel.Channel;
 import lombok.Data;

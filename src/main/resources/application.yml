@@ -5,10 +5,10 @@ server:
 
 spring:
   datasource:
-    username: im
+    username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://175.24.190.65:3306/db_im
+    url: jdbc:mysql://sh-cdb-grhd15oq.sql.tencentcdb.com:60714/db_im
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20

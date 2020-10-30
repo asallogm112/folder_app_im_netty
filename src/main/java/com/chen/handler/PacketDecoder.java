@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
-import com.chen.logic.AbstractPacket;
 import com.chen.logic.AesUtil;
-import com.chen.logic.AllEnums;
-import com.chen.logic.PacketType;
-import com.chen.logic.ReceiptPacket;
+import com.chen.packet.AbstractPacket;
+import com.chen.packet.AllEnums;
+import com.chen.packet.PacketType;
+import com.chen.packet.ReceiptPacket;
 import com.google.gson.Gson;
 
 import io.netty.buffer.ByteBuf;

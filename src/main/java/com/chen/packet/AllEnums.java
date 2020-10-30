@@ -1,4 +1,4 @@
-package com.chen.logic;
+package com.chen.packet;
 
 public class AllEnums {
 

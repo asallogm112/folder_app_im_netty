@@ -9,7 +9,7 @@ import com.chen.handler.PacketDecoder;
 import com.chen.handler.PacketEncoder;
 import com.chen.handler.ReceiptHandler;
 import com.chen.handler.TimeoutHandler;
-import com.chen.logic.PacketType;
+import com.chen.packet.PacketType;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -24,12 +24,12 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 public class ServerStartup {
-	
+
 	@Value("${server.port}")
 	private int port;
- 
+
 	public void start() {
-		PacketType.initPackets();
+		PacketType.initPacketTypes();
 
 		EventLoopGroup boss = new NioEventLoopGroup();
 		EventLoopGroup work = new NioEventLoopGroup();

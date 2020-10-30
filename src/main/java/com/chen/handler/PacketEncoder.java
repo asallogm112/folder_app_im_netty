@@ -2,7 +2,7 @@ package com.chen.handler;
 
 import java.nio.charset.Charset;
 
-import com.chen.logic.AbstractPacket;
+import com.chen.packet.AbstractPacket;
 import com.google.gson.Gson;
 
 import io.netty.buffer.ByteBuf;

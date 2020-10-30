@@ -3,15 +3,15 @@ package com.chen.handler;
 import org.springframework.beans.BeanUtils;
 
 import com.chen.entity.OfflineMsg;
-import com.chen.logic.AbstractPacket;
-import com.chen.logic.AllEnums;
-import com.chen.logic.ChatMsgPacket;
-import com.chen.logic.PacketType;
-import com.chen.logic.ReceiptPacket;
 import com.chen.logic.SessionManager;
 import com.chen.logic.SpringContext;
 import com.chen.logic.UserSession;
 import com.chen.mapper.OfflineMsgMapper;
+import com.chen.packet.AbstractPacket;
+import com.chen.packet.AllEnums;
+import com.chen.packet.ChatMsgPacket;
+import com.chen.packet.PacketType;
+import com.chen.packet.ReceiptPacket;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

@@ -1,4 +1,4 @@
-package com.chen.logic;
+package com.chen.packet;
 
 import lombok.Data;
 
