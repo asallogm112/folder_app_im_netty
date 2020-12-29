@@ -1,4 +1,4 @@
-package com.chen.entity;
+package com.chen;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-@MapperScan("com.chen.mapper")
+@MapperScan("com.chen.mapper.extend")
 public class NettyApplication {
 
 	public static void main(String[] args) {

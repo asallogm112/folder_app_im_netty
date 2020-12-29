@@ -2,46 +2,234 @@ package com.chen.entity;
 
 import java.util.Date;
 
-import lombok.Data;
-
-@Data
 public class OfflineMsg {
-	private Integer id;
+    private Integer id;
 
-	private Integer msg_id;
+    private Integer msg_id;
 
-	private Integer msg_type;
+    private Integer msg_type;
 
-	private Integer msg_status;
+    private Integer msg_status;
 
-	private String sender_id;
+    private String sender_id;
 
-	private String receiver_id;
+    private String receiver_id;
 
-	private String text;
+    private String sender_name;
 
-	private String extra;
+    private String receiver_name;
 
-	private String web_url;
+    private String sender_avatar;
 
-	private Double latitude;
+    private String receiver_avatar;
 
-	private Double longitude;
+    private Integer create_timestamp;
 
-	private String sender_avatar;
+    private Date create_date;
 
-	private String receiver_avatar;
+    private String text;
 
-	private String sender_name;
+    private String extra;
 
-	private String receiver_name;
+    private String image_url;
 
-	private String thumbnail;
+    private String image_thumb_url;
 
-	private Integer duration;
+    private Integer image_width;
 
-	private Integer create_time;
+    private Integer image_height;
 
-	private Date create_date;
+    private Double latitude;
 
+    private Double longitude;
+
+    private String audio_url;
+
+    private String video_url;
+
+    private Integer duration;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getMsg_id() {
+        return msg_id;
+    }
+
+    public void setMsg_id(Integer msg_id) {
+        this.msg_id = msg_id;
+    }
+
+    public Integer getMsg_type() {
+        return msg_type;
+    }
+
+    public void setMsg_type(Integer msg_type) {
+        this.msg_type = msg_type;
+    }
+
+    public Integer getMsg_status() {
+        return msg_status;
+    }
+
+    public void setMsg_status(Integer msg_status) {
+        this.msg_status = msg_status;
+    }
+
+    public String getSender_id() {
+        return sender_id;
+    }
+
+    public void setSender_id(String sender_id) {
+        this.sender_id = sender_id;
+    }
+
+    public String getReceiver_id() {
+        return receiver_id;
+    }
+
+    public void setReceiver_id(String receiver_id) {
+        this.receiver_id = receiver_id;
+    }
+
+    public String getSender_name() {
+        return sender_name;
+    }
+
+    public void setSender_name(String sender_name) {
+        this.sender_name = sender_name;
+    }
+
+    public String getReceiver_name() {
+        return receiver_name;
+    }
+
+    public void setReceiver_name(String receiver_name) {
+        this.receiver_name = receiver_name;
+    }
+
+    public String getSender_avatar() {
+        return sender_avatar;
+    }
+
+    public void setSender_avatar(String sender_avatar) {
+        this.sender_avatar = sender_avatar;
+    }
+
+    public String getReceiver_avatar() {
+        return receiver_avatar;
+    }
+
+    public void setReceiver_avatar(String receiver_avatar) {
+        this.receiver_avatar = receiver_avatar;
+    }
+
+    public Integer getCreate_timestamp() {
+        return create_timestamp;
+    }
+
+    public void setCreate_timestamp(Integer create_timestamp) {
+        this.create_timestamp = create_timestamp;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public String getImage_thumb_url() {
+        return image_thumb_url;
+    }
+
+    public void setImage_thumb_url(String image_thumb_url) {
+        this.image_thumb_url = image_thumb_url;
+    }
+
+    public Integer getImage_width() {
+        return image_width;
+    }
+
+    public void setImage_width(Integer image_width) {
+        this.image_width = image_width;
+    }
+
+    public Integer getImage_height() {
+        return image_height;
+    }
+
+    public void setImage_height(Integer image_height) {
+        this.image_height = image_height;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getAudio_url() {
+        return audio_url;
+    }
+
+    public void setAudio_url(String audio_url) {
+        this.audio_url = audio_url;
+    }
+
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 }

@@ -10,7 +10,7 @@ import com.chen.logic.AsyncTask;
 import com.chen.logic.SessionManager;
 import com.chen.logic.SpringContext;
 import com.chen.logic.UserSession;
-import com.chen.mapper.OfflineMsgMapper;
+import com.chen.mapper.extend.OfflineMsgMapperExtend;
 import com.chen.packet.AbstractPacket;
 import com.chen.packet.ChatMsgPacket;
 import com.chen.packet.LoginPacket;
@@ -41,7 +41,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
 		UserSession existSession = SessionManager.getSessionBy(login.getUser_id());
 		
-		OfflineMsgMapper offlineMsgMapper = SpringContext.getBean(OfflineMsgMapper.class);
+		OfflineMsgMapperExtend offlineMsgMapper = SpringContext.getBean(OfflineMsgMapperExtend.class);
 		List<OfflineMsg> offlineMsgs = offlineMsgMapper.selectByReceiverId(login.getUser_id());
 
 		//对方上线之后 , 给他发送离线消息 (异步)

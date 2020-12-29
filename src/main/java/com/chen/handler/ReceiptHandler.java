@@ -1,7 +1,7 @@
 package com.chen.handler;
 
 import com.chen.logic.SpringContext;
-import com.chen.mapper.OfflineMsgMapper;
+import com.chen.mapper.extend.OfflineMsgMapperExtend;
 import com.chen.packet.AbstractPacket;
 import com.chen.packet.PacketType;
 import com.chen.packet.ReceiptPacket;
@@ -20,7 +20,7 @@ public class ReceiptHandler extends SimpleChannelInboundHandler<AbstractPacket> 
 		} 
 		System.err.println("回执包");
 		ReceiptPacket receipt = (ReceiptPacket) packet;
-		OfflineMsgMapper offlineMsgMapper = SpringContext.getBean(OfflineMsgMapper.class);
+		OfflineMsgMapperExtend offlineMsgMapper = SpringContext.getBean(OfflineMsgMapperExtend.class);
 		offlineMsgMapper.deleteOfflineMsg(receipt);
 	}
 

@@ -1,14 +1,14 @@
+ 
 
 server:
-  port: 2222
-  
+  port: 5607
 
 spring:
   datasource:
     username: root
-    password: root
+    password: asa112llo,l
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sh-cdb-grhd15oq.sql.tencentcdb.com:60714/db_im
+    url: jdbc:mysql://124.71.159.95:3306/db_im
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20

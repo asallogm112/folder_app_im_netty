@@ -44,7 +44,7 @@ public class ServerStartup {
 				int idleSeconds = 30;
 
 				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4));
-				pipe.addLast("IdleStateHandler", new IdleStateHandler(idleSeconds, 0, 0)); // idleSeconds = 30秒 未写超时
+				pipe.addLast("IdleStateHandler", new IdleStateHandler(idleSeconds, 0, 0)); // idleSeconds = 30秒 no read event = 超时
 				pipe.addLast("PacketDecoder", new PacketDecoder());
 				pipe.addLast("PacketEncoder", new PacketEncoder());
 				pipe.addLast("LoginHandler", new LoginHandler());

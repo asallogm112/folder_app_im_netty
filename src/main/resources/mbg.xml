@@ -15,7 +15,7 @@
 		
 		<!-- jdbc -->
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-			connectionURL="jdbc:mysql://sh-cdb-grhd15oq.sql.tencentcdb.com:60714/db_im" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/db_im" userId="root"
 			password="root">
 		</jdbcConnection>
 
