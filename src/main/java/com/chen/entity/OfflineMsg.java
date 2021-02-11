@@ -23,17 +23,11 @@ public class OfflineMsg {
 
     private String receiver_avatar;
 
-    private Integer create_timestamp;
-
-    private Date create_date;
-
     private String text;
 
     private String extra;
 
-    private String image_url;
-
-    private String image_thumb_url;
+    private String image_url; 
 
     private Integer image_width;
 
@@ -48,6 +42,12 @@ public class OfflineMsg {
     private String video_url;
 
     private Integer duration;
+
+    private Date create_time;
+
+    private Integer create_timestamp;
+
+    private Date update_time;
 
     public Integer getId() {
         return id;
@@ -129,22 +129,6 @@ public class OfflineMsg {
         this.receiver_avatar = receiver_avatar;
     }
 
-    public Integer getCreate_timestamp() {
-        return create_timestamp;
-    }
-
-    public void setCreate_timestamp(Integer create_timestamp) {
-        this.create_timestamp = create_timestamp;
-    }
-
-    public Date getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
-    }
-
     public String getText() {
         return text;
     }
@@ -168,15 +152,7 @@ public class OfflineMsg {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-
-    public String getImage_thumb_url() {
-        return image_thumb_url;
-    }
-
-    public void setImage_thumb_url(String image_thumb_url) {
-        this.image_thumb_url = image_thumb_url;
-    }
-
+ 
     public Integer getImage_width() {
         return image_width;
     }
@@ -231,5 +207,29 @@ public class OfflineMsg {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    public Integer getCreate_timestamp() {
+        return create_timestamp;
+    }
+
+    public void setCreate_timestamp(Integer create_timestamp) {
+        this.create_timestamp = create_timestamp;
+    }
+
+    public Date getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

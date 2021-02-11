@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chen.mapper.OfflineMsgMapper">
-  <resultMap id="BaseResultMap" type="com.chen.entity.OfflineMsg">
+<mapper namespace="com.chen.mapper.extend.OfflineMsgMapperExtend">
+  <resultMap id="BaseResultMap" type="com.chen.entity.extend.OfflineMsgExtend">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="msg_id" jdbcType="INTEGER" property="msg_id" />
     <result column="msg_type" jdbcType="INTEGER" property="msg_type" />
@@ -12,8 +12,6 @@
     <result column="receiver_name" jdbcType="VARCHAR" property="receiver_name" />
     <result column="sender_avatar" jdbcType="VARCHAR" property="sender_avatar" />
     <result column="receiver_avatar" jdbcType="VARCHAR" property="receiver_avatar" />
-    <result column="create_timestamp" jdbcType="INTEGER" property="create_timestamp" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
     <result column="text" jdbcType="VARCHAR" property="text" />
     <result column="extra" jdbcType="VARCHAR" property="extra" />
     <result column="image_url" jdbcType="VARCHAR" property="image_url" />
@@ -25,12 +23,15 @@
     <result column="audio_url" jdbcType="VARCHAR" property="audio_url" />
     <result column="video_url" jdbcType="VARCHAR" property="video_url" />
     <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="create_timestamp" jdbcType="INTEGER" property="create_timestamp" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
   </resultMap>
   <sql id="Base_Column_List">
     id, msg_id, msg_type, msg_status, sender_id, receiver_id, sender_name, receiver_name, 
-    sender_avatar, receiver_avatar, create_timestamp, create_date, text, extra, image_url, 
-    image_thumb_url, image_width, image_height, latitude, longitude, audio_url, video_url, 
-    duration
+    sender_avatar, receiver_avatar, text, extra, image_url, image_thumb_url, image_width, 
+    image_height, latitude, longitude, audio_url, video_url, duration, create_time, create_timestamp, 
+    update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -49,19 +50,19 @@
     insert into tb_offline_msg (msg_id, msg_type, msg_status, 
       sender_id, receiver_id, sender_name, 
       receiver_name, sender_avatar, receiver_avatar, 
-      create_timestamp, create_date, text, 
-      extra, image_url, image_thumb_url, 
-      image_width, image_height, latitude, 
-      longitude, audio_url, video_url, 
-      duration)
+      text, extra, image_url, 
+      image_thumb_url, image_width, image_height, 
+      latitude, longitude, audio_url, 
+      video_url, duration, create_time, 
+      create_timestamp, update_time)
     values (#{msg_id,jdbcType=INTEGER}, #{msg_type,jdbcType=INTEGER}, #{msg_status,jdbcType=INTEGER}, 
       #{sender_id,jdbcType=VARCHAR}, #{receiver_id,jdbcType=VARCHAR}, #{sender_name,jdbcType=VARCHAR}, 
       #{receiver_name,jdbcType=VARCHAR}, #{sender_avatar,jdbcType=VARCHAR}, #{receiver_avatar,jdbcType=VARCHAR}, 
-      #{create_timestamp,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, #{text,jdbcType=VARCHAR}, 
-      #{extra,jdbcType=VARCHAR}, #{image_url,jdbcType=VARCHAR}, #{image_thumb_url,jdbcType=VARCHAR}, 
-      #{image_width,jdbcType=INTEGER}, #{image_height,jdbcType=INTEGER}, #{latitude,jdbcType=DOUBLE}, 
-      #{longitude,jdbcType=DOUBLE}, #{audio_url,jdbcType=VARCHAR}, #{video_url,jdbcType=VARCHAR}, 
-      #{duration,jdbcType=INTEGER})
+      #{text,jdbcType=VARCHAR}, #{extra,jdbcType=VARCHAR}, #{image_url,jdbcType=VARCHAR}, 
+      #{image_thumb_url,jdbcType=VARCHAR}, #{image_width,jdbcType=INTEGER}, #{image_height,jdbcType=INTEGER}, 
+      #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, #{audio_url,jdbcType=VARCHAR}, 
+      #{video_url,jdbcType=VARCHAR}, #{duration,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{create_timestamp,jdbcType=INTEGER}, #{update_time,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chen.entity.OfflineMsg">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -96,12 +97,6 @@
       <if test="receiver_avatar != null">
         receiver_avatar,
       </if>
-      <if test="create_timestamp != null">
-        create_timestamp,
-      </if>
-      <if test="create_date != null">
-        create_date,
-      </if>
       <if test="text != null">
         text,
       </if>
@@ -135,6 +130,15 @@
       <if test="duration != null">
         duration,
       </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="create_timestamp != null">
+        create_timestamp,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="msg_id != null">
@@ -163,12 +167,6 @@
       </if>
       <if test="receiver_avatar != null">
         #{receiver_avatar,jdbcType=VARCHAR},
-      </if>
-      <if test="create_timestamp != null">
-        #{create_timestamp,jdbcType=INTEGER},
-      </if>
-      <if test="create_date != null">
-        #{create_date,jdbcType=TIMESTAMP},
       </if>
       <if test="text != null">
         #{text,jdbcType=VARCHAR},
@@ -202,6 +200,15 @@
       </if>
       <if test="duration != null">
         #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_timestamp != null">
+        #{create_timestamp,jdbcType=INTEGER},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
