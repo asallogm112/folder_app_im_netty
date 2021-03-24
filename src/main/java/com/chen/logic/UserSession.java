@@ -1,8 +1,7 @@
 package com.chen.logic;
 
 import com.chen.entity.User;
-import com.chen.packet.AllEnums;
-import com.chen.packet.ChatMsgPacket;
+import com.chen.packet.AbstractPacket;
 
 import io.netty.channel.Channel;
 import lombok.Data;
@@ -14,9 +13,8 @@ public class UserSession {
 
 	private Channel channel;
 
-	public void sendChannelMsg(ChatMsgPacket msg) {
+	public void sendChannelMsg(AbstractPacket msg) { //ChatMsgPacket
 		
-		msg.setMsg_status(AllEnums.MsgStatus_Sent);
 		channel.writeAndFlush(msg);
 		
 		System.err.println("isActive : " + channel.isActive());

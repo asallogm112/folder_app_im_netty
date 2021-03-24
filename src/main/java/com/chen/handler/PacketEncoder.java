@@ -17,7 +17,7 @@ public class PacketEncoder extends MessageToByteEncoder<AbstractPacket> {
 		out.writeInt(msg.getPacketType());
 
 		String jsonStr = new Gson().toJson(msg);
-		byte[] bytes = jsonStr.getBytes(Charset.defaultCharset());
+		byte[] bytes = jsonStr.getBytes(Charset.forName("UTF-8"));
 		out.writeInt(bytes.length);
 		out.writeBytes(bytes); 
 	}

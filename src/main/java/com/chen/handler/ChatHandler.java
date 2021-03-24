@@ -35,7 +35,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		}
 		
 		String receiverId = chatPacket.getReceiver_id();
-		UserSession session = SessionManager.getSessionBy(receiverId);
+		UserSession receiver_session = SessionManager.getSessionBy(receiverId);
 
 		// 插入数据库,防止漏消息 , 对方接受成功后, 发送-回执-去清除数据库
 		OfflineMsgMapper offlineMsgMapper = SpringContext.getBean(OfflineMsgMapper.class);
@@ -55,11 +55,18 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			receipt.setMsg_status(AllEnums.MsgStatus_Failed); // 回执,设置为此消息发送失败
 		} 
 		
-		if (session != null) {
-			session.sendChannelMsg(chatPacket);
-			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 插入数据库失败,但是在线 ,回执 设为成功
+		if (receiver_session != null) {
+			
+			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 可能插入数据库失败,但是在线 =>回执 设为成功
+			receiver_session.sendChannelMsg(chatPacket);
+			
+			//给自己 发送回执 TODO
+			String sender_id = chatPacket.getSender_id();
+			UserSession sender_session = SessionManager.getSessionBy(sender_id);
+			
+			sender_session.sendChannelMsg(chatPacket);
 		} else {
-			//todo apns or android push
+			//TODO apns or android push
 		} 
 		ctx.channel().writeAndFlush(receipt); 
 	}
