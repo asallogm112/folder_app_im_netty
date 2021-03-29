@@ -14,6 +14,7 @@ public class AllEnums {
 	public static final int MsgType_Image = 1;
 	public static final int MsgType_Voice = 2;
 	public static final int MsgType_Video = 3;
+	
 	public static final int MsgType_Link = 4;
 	public static final int MsgType_MiniProgram = 5;
 	public static final int MsgType_Subscribe = 6;
