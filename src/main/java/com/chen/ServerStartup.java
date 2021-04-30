@@ -40,7 +40,7 @@ public class ServerStartup {
 			protected void initChannel(Channel ch) throws Exception {
 				ChannelPipeline pipe = ch.pipeline();
 
-				int maxFrameLength = 1024 * 1024 * 4;
+				int maxFrameLength = 1024 * 1024 * 10;
 				int idleSeconds = 30;
 
 				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4));
