@@ -12,7 +12,7 @@ public class AllEnums {
 	//msg_type
 	public static final int MsgType_Text = 0;
 	public static final int MsgType_Image = 1;
-	public static final int MsgType_Voice = 2;
+	public static final int MsgType_Audio = 2;
 	public static final int MsgType_Video = 3;
 	
 	public static final int MsgType_Link = 4;

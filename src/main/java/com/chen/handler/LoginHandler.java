@@ -42,7 +42,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		UserSession existSession = SessionManager.getSessionBy(login.getUser_id());
 		
 		OfflineMsgMapperExtend offlineMsgMapper = SpringContext.getBean(OfflineMsgMapperExtend.class);
-		List<OfflineMsg> offlineMsgs = offlineMsgMapper.selectByReceiverId(login.getUser_id());
+		List<OfflineMsg> offlineMsgs = offlineMsgMapper.selectOfflineListByReceiver_id(login.getUser_id());
 
 		//对方上线之后 , 给他发送离线消息 (异步)
 		if (offlineMsgs != null && offlineMsgs.size() > 0) {
@@ -65,7 +65,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			SessionManager.registerSession(session);
 			ctx.pipeline().remove(this);
 		} else {
-			SessionManager.removeSession(login.getUser_id());
+			SessionManager.removeSession(login.getUser_id()); //把之前的 顶掉 (也有可能是脏数据)
 			SessionManager.registerSession(session);
 		}
 	}

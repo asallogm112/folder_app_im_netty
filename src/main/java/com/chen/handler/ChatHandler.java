@@ -25,15 +25,19 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 			ctx.fireChannelRead(packet);
 			return;
 		}
-		System.err.println("聊天消息");
-		
+
 		ChatMsgPacket chatPacket = (ChatMsgPacket) packet;
 
+		System.err.println("聊天消息" + chatPacket.getText());
+
 		if (chatPacket.getMsg_type() == AllEnums.MsgType_Image) {
-			chatPacket.setWeb_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getWeb_url());
-			chatPacket.setThumbnail("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getThumbnail());
+			chatPacket.setImage_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getImage_url());
+		} else if (chatPacket.getMsg_type() == AllEnums.MsgType_Video) {
+
+		} else if (chatPacket.getMsg_type() == AllEnums.MsgType_Audio) {
+
 		}
-		
+
 		String receiverId = chatPacket.getReceiver_id();
 		UserSession receiver_session = SessionManager.getSessionBy(receiverId);
 
@@ -45,30 +49,26 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		ReceiptPacket receipt = new ReceiptPacket();
 		BeanUtils.copyProperties(chatPacket, receipt);
 		receipt.setMsg_status(AllEnums.MsgStatus_Sent);
-		
+
 		try {
-			
-			offlineMsgMapper.insertSelective(record); //插入离线消息,防止丢消息
-			
+
+			offlineMsgMapper.insertSelective(record); // 不管是否在线, 插入离线消息,防止丢消息
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			receipt.setMsg_status(AllEnums.MsgStatus_Failed); // 回执,设置为此消息发送失败
-		} 
-		
+		}
+
 		if (receiver_session != null) {
-			
+
 			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 可能插入数据库失败,但是在线 =>回执 设为成功
 			receiver_session.sendChannelMsg(chatPacket);
-			
-			//给自己 发送回执 TODO
-			String sender_id = chatPacket.getSender_id();
-			UserSession sender_session = SessionManager.getSessionBy(sender_id);
-			
-			sender_session.sendChannelMsg(chatPacket);
+
 		} else {
-			//TODO apns or android push
-		} 
-		ctx.channel().writeAndFlush(receipt); 
+			// TODO apns or android push
+		}
+		// 给自己 发送回执 TODO
+		ctx.channel().writeAndFlush(receipt);
 	}
 
 }

@@ -23,6 +23,13 @@ public class ReceiptHandler extends SimpleChannelInboundHandler<AbstractPacket> 
 		} 
 		System.err.println("回执包");
 		ReceiptPacket receipt = (ReceiptPacket) packet;
+		
+		if (receipt.getSender_id() == null) {
+			System.err.println("回执包 null");
+
+			return;
+		}
+		
 		OfflineMsgMapperExtend offlineMsgMapper = SpringContext.getBean(OfflineMsgMapperExtend.class);
 		offlineMsgMapper.deleteOfflineMsg(receipt); //删除数据库 - 对应的msg
 		
