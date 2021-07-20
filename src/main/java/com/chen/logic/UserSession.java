@@ -16,12 +16,6 @@ public class UserSession {
 	public void sendChannelMsg(AbstractPacket msg) { //ChatMsgPacket
 		
 		channel.writeAndFlush(msg);
-		
-		System.err.println("isActive : " + channel.isActive());
-		System.err.println("isOpen : " + channel.isOpen());
-		System.err.println("isWritable : " + channel.isWritable());
-		System.err.println("isRegistered : " + channel.isRegistered());
-		System.err.println("-------------------------\n");
 	}
 
 }

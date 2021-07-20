@@ -23,19 +23,16 @@ public class PacketDecoder extends MessageToMessageDecoder<ByteBuf> {
 
 		while (buf.readableBytes() > 0) {
 
-			int packetType = buf.readInt(); 
-
-//			System.err.println("packetType : " + packetType + "-- size : " + size);
+			int packetType = buf.readInt();
 
 			if (packetType == PacketType.PacketType_HeartBeat.getPacketType()) {
-//				size = buf.readableBytes();
-//				buf.skipBytes(buf.readableBytes());
-//				avai = buf.readableBytes();
-//				System.err.println("心跳包 size : " + size);
 				return;
 			}
 
 			int readableBytes = buf.readableBytes();
+
+			System.err.println("packetType : " + packetType + "; readableBytes : " + readableBytes);
+			
 			if (readableBytes < 4) {
 				buf.resetReaderIndex();
 				readableBytes = buf.readableBytes();

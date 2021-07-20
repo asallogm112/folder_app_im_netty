@@ -18,15 +18,15 @@ public class ChatMsgPacket extends AbstractPacket {
 	private String text;
 	private String sub_text; // 额外的
 
-	private double latitude;
-	private double longitude;
+	private Double latitude;
+	private Double longitude;
 
-	private int image_width;
-	private int image_height;
+	private Integer image_width;
+	private Integer image_height;
 
 	private String image_url; // 网络图片URL
 
-	private int duration; // MsgType_Video && MsgType_Audio
+	private Integer duration; // MsgType_Video && MsgType_Audio
 	private String audio_url; // MsgType_Video && MsgType_Audio
 	private String video_url; // MsgType_Video && MsgType_Audio
 

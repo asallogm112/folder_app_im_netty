@@ -41,7 +41,7 @@ public class ServerStartup {
 				ChannelPipeline pipe = ch.pipeline();
 
 				int maxFrameLength = 1024 * 1024 * 10;
-				int readerIdleTimeSeconds = 30;
+				int readerIdleTimeSeconds = 100; //30s
 
 				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4));
 				pipe.addLast("IdleStateHandler", new IdleStateHandler(readerIdleTimeSeconds, 0, 0)); // idleSeconds = 30秒 no read event = 超时

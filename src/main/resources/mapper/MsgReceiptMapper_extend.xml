@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.mapper.extend.MsgReceiptMapperExtend">
+  
+  <!-- MsgStatus_Read = 4; //对方已读 -->
+	<select id="selectReceiptListBySender_id" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		*
+		from tb_msg_receipt
+		where
+		sender_id = #{sender_id} 
+		
+	</select>
+	
+	<delete id="deleteReceiptListBy_id" parameterType="java.lang.String">
+    delete from tb_msg_receipt
+    where 
+    sender_id = #{sender_id}
+  </delete>
+</mapper>

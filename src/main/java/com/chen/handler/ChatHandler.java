@@ -27,15 +27,17 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 		}
 
 		ChatMsgPacket chatPacket = (ChatMsgPacket) packet;
+		chatPacket.setMsg_status(AllEnums.MsgStatus_Sent);
 
-		System.err.println("聊天消息" + chatPacket.getText());
+		System.err.println("聊天消息 : " + chatPacket.getText());
 
 		if (chatPacket.getMsg_type() == AllEnums.MsgType_Image) {
-			chatPacket.setImage_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getImage_url());
+			chatPacket.setImage_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getImage_url() + "/large");
 		} else if (chatPacket.getMsg_type() == AllEnums.MsgType_Video) {
-
+			chatPacket.setImage_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getImage_url() + "/large");
+			chatPacket.setVideo_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getVideo_url());
 		} else if (chatPacket.getMsg_type() == AllEnums.MsgType_Audio) {
-
+			chatPacket.setAudio_url("https://folder-app.oss-cn-shanghai.aliyuncs.com/" + chatPacket.getAudio_url());
 		}
 
 		String receiverId = chatPacket.getReceiver_id();
@@ -43,9 +45,11 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
 		// 插入数据库,防止漏消息 , 对方接受成功后, 发送-回执-去清除数据库
 		OfflineMsgMapper offlineMsgMapper = SpringContext.getBean(OfflineMsgMapper.class);
+		
 		OfflineMsg record = new OfflineMsg();
 		BeanUtils.copyProperties(chatPacket, record);
 
+		//receipt
 		ReceiptPacket receipt = new ReceiptPacket();
 		BeanUtils.copyProperties(chatPacket, receipt);
 		receipt.setMsg_status(AllEnums.MsgStatus_Sent);
@@ -61,14 +65,16 @@ public class ChatHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
 		if (receiver_session != null) {
 
-			receipt.setMsg_status(AllEnums.MsgStatus_Sent); // 可能插入数据库失败,但是在线 =>回执 设为成功
+			receipt.setMsg_status(AllEnums.MsgStatus_Received); // 可能插入数据库失败,但是在线 =>回执 设为成功
+			
+			chatPacket.setMsg_status(AllEnums.MsgStatus_Received);
 			receiver_session.sendChannelMsg(chatPacket);
 
 		} else {
 			// TODO apns or android push
 		}
-		// 给自己 发送回执 TODO
-		ctx.channel().writeAndFlush(receipt);
+		//一定要放在这, 如果接受者online, 直接发送 received 回执
+		ctx.channel().writeAndFlush(receipt); //给自己回执(已发送),否则一直在转圈圈
 	}
 
 }

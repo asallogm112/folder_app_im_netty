@@ -9,7 +9,8 @@ import com.chen.packet.ReceiptPacket;
 public interface OfflineMsgMapperExtend extends OfflineMsgMapper{
 
 	List<OfflineMsg> selectOfflineListByReceiver_id(String receiver_id);
-	
 
 	void deleteOfflineMsg(ReceiptPacket receipt);
+	
+	void insertReceipt(ReceiptPacket receipt);
 }

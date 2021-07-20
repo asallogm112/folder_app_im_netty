@@ -8,14 +8,22 @@
 		select
 		<include refid="Base_Column_List" />
 		from tb_offline_msg
-		where receiver_id = #{receiver_id,jdbcType=VARCHAR} and msg_status != 4
+		where
+		receiver_id = #{receiver_id} 
+		and
+		msg_status != 4
+		
 	</select>
 
 	<update id="deleteOfflineMsg"
-		parameterType="com.chen.entity.OfflineMsg">
-		update tb_offline_msg set msg_status = 4
-		where msg_id = #{msg_id,jdbcType=INTEGER} and sender_id =
-		#{sender_id,jdbcType=VARCHAR} and receiver_id =
-		#{receiver_id,jdbcType=VARCHAR}
+		parameterType="com.chen.packet.ReceiptPacket">
+		update tb_offline_msg 
+		set
+		 msg_status = 4
+		
+		where msg_id = #{msg_id}
+		and sender_id = #{sender_id} 
+		and receiver_id = #{receiver_id}
 	</update>
+	
 </mapper>
