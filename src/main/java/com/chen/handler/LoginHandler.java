@@ -2,6 +2,7 @@ package com.chen.handler;
 
 import java.util.List;
 
+import io.netty.channel.ChannelHandler;
 import org.springframework.beans.BeanUtils;
 
 import com.chen.entity.OfflineMsg;
@@ -12,24 +13,18 @@ import com.chen.logic.SpringContext;
 import com.chen.logic.UserSession;
 import com.chen.mapper.extend.MsgReceiptMapperExtend;
 import com.chen.mapper.extend.OfflineMsgMapperExtend;
-import com.chen.packet.AbstractPacket;
-import com.chen.packet.ChatMsgPacket;
+import com.chen.packet.ChatPacket;
 import com.chen.packet.LoginPacket;
-import com.chen.packet.PacketType;
 import com.chen.packet.ReceiptPacket;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
+@ChannelHandler.Sharable
+public class LoginHandler extends SimpleChannelInboundHandler<LoginPacket> {
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, AbstractPacket packet) throws Exception {
-
-		if (packet.getPacketType() != PacketType.PacketType_Login.getPacketType()) {
-			ctx.fireChannelRead(packet);
-			return;
-		}
+	protected void channelRead0(ChannelHandlerContext ctx, LoginPacket packet) throws Exception {
 
 		System.err.println("登录包");
 		LoginPacket login = (LoginPacket) packet;
@@ -60,14 +55,13 @@ public class LoginHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 				public void run() {
 					for (OfflineMsg offlineMsg : offlineMsg_list) {
 
-						ChatMsgPacket chat = new ChatMsgPacket();
+						ChatPacket chat = new ChatPacket();
 						BeanUtils.copyProperties(offlineMsg, chat);
 						session.sendChannelMsg(chat);
 					}
 				}
 			});
 		}
-
 		// 对方上线之后 , 给他发送离线 回执 (异步)
 		if (receipt_list != null && receipt_list.size() > 0) {
 

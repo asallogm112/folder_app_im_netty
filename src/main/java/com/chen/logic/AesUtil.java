@@ -1,5 +1,7 @@
 package com.chen.logic;
 
+import org.springframework.util.StringUtils;
+
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -9,10 +11,13 @@ public class AesUtil {
 
 	private final static String cipher = "1234567890123456";
 
-	public static boolean verifyToken(String verify) throws Exception {
+	public static boolean verifyToken(String token) throws Exception {
+		if (StringUtils.isEmpty(token)){
+			return false;
+		}
 		int server_time = (int)(System.currentTimeMillis()/1000); 
 		
-		String time = decrypt(verify);
+		String time = decrypt(token);
 		int client_time = Integer.parseInt(time);
 		
 		if (server_time - client_time < 10) { //10秒 验证超时

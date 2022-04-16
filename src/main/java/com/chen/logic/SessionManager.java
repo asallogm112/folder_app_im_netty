@@ -11,7 +11,7 @@ public class SessionManager {
 	private static ConcurrentMap<String, UserSession> userId2Session = new ConcurrentHashMap<>();
 
 	public static UserSession getSessionBy(String userId) {
-		UserSession session = userId2Session.get(userId);
+		UserSession session = userId2Session.getOrDefault(userId, null);
 		return session;
 	}
 

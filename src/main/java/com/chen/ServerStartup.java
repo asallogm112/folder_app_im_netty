@@ -1,70 +1,67 @@
 package com.chen;
 
+import com.chen.handler.*;
+import com.chen.packet.MyLogging;
+import com.chen.packet.PacketType;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.chen.handler.ChatHandler;
-import com.chen.handler.LoginHandler;
-import com.chen.handler.PacketDecoder;
-import com.chen.handler.PacketEncoder;
-import com.chen.handler.ReceiptHandler;
-import com.chen.handler.TimeoutHandler;
-import com.chen.packet.PacketType;
-
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.timeout.IdleStateHandler;
-
 @Component
 public class ServerStartup {
-
-	@Value("${server.port}")
-	private int port;
-
-	public void start() {
-		PacketType.initPacketTypes();
-
-		EventLoopGroup boss = new NioEventLoopGroup();
-		EventLoopGroup work = new NioEventLoopGroup();
-
-		ServerBootstrap server = new ServerBootstrap();
-		server.group(boss, work).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<Channel>() {
-
-			protected void initChannel(Channel ch) throws Exception {
-				ChannelPipeline pipe = ch.pipeline();
-
-				int maxFrameLength = 1024 * 1024 * 10;
-				int readerIdleTimeSeconds = 100; //30s
-
-				pipe.addFirst("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(maxFrameLength, 4, 4));
-				pipe.addLast("IdleStateHandler", new IdleStateHandler(readerIdleTimeSeconds, 0, 0)); // idleSeconds = 30秒 no read event = 超时
-				pipe.addLast("PacketDecoder", new PacketDecoder());
-				pipe.addLast("PacketEncoder", new PacketEncoder());
-				pipe.addLast("LoginHandler", new LoginHandler());
-				pipe.addLast("ChatHandler", new ChatHandler());
-				pipe.addLast("ReceiptHandler", new ReceiptHandler());
-				pipe.addLast("TimeoutHandler", new TimeoutHandler());
-
-			};
-		});
-
-		server.childOption(ChannelOption.TCP_NODELAY, true);
-		server.childOption(ChannelOption.SO_BACKLOG, 1024);
-
-		try {
-			server.bind(port).sync().channel().closeFuture().sync();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-			boss.shutdownGracefully();
-			work.shutdownGracefully();
-		}
-	}
+    
+    @Value("${server.port}")
+    private int port;
+    
+    public void startServer() {
+        PacketType.initPacketTypes();
+        
+        ServerBootstrap server = new ServerBootstrap();
+        EventLoopGroup boss = new NioEventLoopGroup();
+        EventLoopGroup work = new NioEventLoopGroup();
+        
+        PacketDecoder packetDecoder = new PacketDecoder();
+        PacketEncoder packetEncoder = new PacketEncoder();
+        ReceiptHandler receiptHandler = new ReceiptHandler();
+        LoginHandler loginHandler = new LoginHandler();
+        ChatHandler chatHandler = new ChatHandler();
+    
+        server.childOption(ChannelOption.TCP_NODELAY, true);
+        server.childOption(ChannelOption.RCVBUF_ALLOCATOR, new AdaptiveRecvByteBufAllocator(20, 20, 20));
+    
+        server.group(boss, work)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        ChannelPipeline pipe = ch.pipeline();
+                        
+                        System.err.println("initChannel");
+    
+                        pipe.addLast("logging", new MyLogging());
+                        pipe.addLast("ReadIdleHandler", new ReadIdleHandler());
+                        pipe.addLast("FrameDecoder", new FrameDecoder());
+                        pipe.addLast("PacketDecoder", packetDecoder);
+                        pipe.addLast("LoginHandler", loginHandler);
+                        pipe.addLast("ChatHandler", chatHandler);
+                        pipe.addLast("ReceiptHandler", receiptHandler);
+                        pipe.addLast("PacketEncoder", packetEncoder);
+                    }
+                });
+        
+        try {
+            server.bind(port).sync().channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            boss.shutdownGracefully();
+            work.shutdownGracefully();
+        }
+    }
 }

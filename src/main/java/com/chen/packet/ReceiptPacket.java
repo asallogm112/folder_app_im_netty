@@ -9,7 +9,8 @@ public class ReceiptPacket extends AbstractPacket {
 
 	private String sender_id;
 	private String receiver_id;
-
+	private int msg_status;
+	
 	@Override
 	public int getPacketType() {
 		return PacketType.PacketType_Receipt.getPacketType();

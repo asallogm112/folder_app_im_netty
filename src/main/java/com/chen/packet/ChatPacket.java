@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ChatMsgPacket extends AbstractPacket {
+public class ChatPacket extends AbstractPacket {
 
 	private String sender_id;
 	private String sender_name;
@@ -14,7 +14,10 @@ public class ChatMsgPacket extends AbstractPacket {
 	private String receiver_id;
 	private String receiver_name;
 	private String receiver_avatar;
-
+	
+	private int msg_type;
+	private int msg_status;
+	
 	private String text;
 	private String sub_text; // 额外的
 

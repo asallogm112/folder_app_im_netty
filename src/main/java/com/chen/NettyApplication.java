@@ -15,7 +15,7 @@ public class NettyApplication {
 
 		ServerStartup startup = context.getBean(ServerStartup.class);
 
-		startup.start();   
+		startup.startServer();
 	}
 }
 
