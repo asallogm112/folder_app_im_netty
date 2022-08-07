@@ -6,6 +6,7 @@
     <result column="msg_id" jdbcType="INTEGER" property="msg_id" />
     <result column="msg_type" jdbcType="INTEGER" property="msg_type" />
     <result column="msg_status" jdbcType="INTEGER" property="msg_status" />
+    <result column="packet_type" jdbcType="INTEGER" property="packet_type" />
     <result column="sender_id" jdbcType="VARCHAR" property="sender_id" />
     <result column="receiver_id" jdbcType="VARCHAR" property="receiver_id" />
     <result column="sender_name" jdbcType="VARCHAR" property="sender_name" />
@@ -13,11 +14,12 @@
     <result column="sender_avatar" jdbcType="VARCHAR" property="sender_avatar" />
     <result column="receiver_avatar" jdbcType="VARCHAR" property="receiver_avatar" />
     <result column="text" jdbcType="VARCHAR" property="text" />
-    <result column="extra" jdbcType="VARCHAR" property="extra" />
     <result column="image_url" jdbcType="VARCHAR" property="image_url" />
     <result column="image_width" jdbcType="INTEGER" property="image_width" />
     <result column="image_height" jdbcType="INTEGER" property="image_height" />
     <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="longitude" jdbcType="DOUBLE" property="longitude" />
     <result column="audio_url" jdbcType="VARCHAR" property="audio_url" />
     <result column="video_url" jdbcType="VARCHAR" property="video_url" />
@@ -27,10 +29,10 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, msg_id, msg_type, msg_status, sender_id, receiver_id, sender_name, receiver_name, 
-    sender_avatar, receiver_avatar, text, extra, image_url, image_width, 
-    image_height, latitude, longitude, audio_url, video_url, duration, create_time, create_timestamp, 
-    update_time
+    id, msg_id, msg_type, msg_status, packet_type, sender_id, receiver_id, sender_name, 
+    receiver_name, sender_avatar, receiver_avatar, text, image_url, image_width, image_height, 
+    latitude, name, address, longitude, audio_url, video_url, duration, create_time, 
+    create_timestamp, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -47,21 +49,23 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tb_offline_msg (msg_id, msg_type, msg_status, 
-      sender_id, receiver_id, sender_name, 
-      receiver_name, sender_avatar, receiver_avatar, 
-      text, extra, image_url, 
-      image_width, image_height, 
-      latitude, longitude, audio_url, 
-      video_url, duration, create_time, 
-      create_timestamp, update_time)
+      packet_type, sender_id, receiver_id, 
+      sender_name, receiver_name, sender_avatar, 
+      receiver_avatar, text, image_url, 
+      image_width, image_height, latitude, 
+      name, address, longitude, 
+      audio_url, video_url, duration, 
+      create_time, create_timestamp, update_time
+      )
     values (#{msg_id,jdbcType=INTEGER}, #{msg_type,jdbcType=INTEGER}, #{msg_status,jdbcType=INTEGER}, 
-      #{sender_id,jdbcType=VARCHAR}, #{receiver_id,jdbcType=VARCHAR}, #{sender_name,jdbcType=VARCHAR}, 
-      #{receiver_name,jdbcType=VARCHAR}, #{sender_avatar,jdbcType=VARCHAR}, #{receiver_avatar,jdbcType=VARCHAR}, 
-      #{text,jdbcType=VARCHAR}, #{extra,jdbcType=VARCHAR}, #{image_url,jdbcType=VARCHAR}, 
-      #{image_width,jdbcType=INTEGER}, #{image_height,jdbcType=INTEGER}, 
-      #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, #{audio_url,jdbcType=VARCHAR}, 
-      #{video_url,jdbcType=VARCHAR}, #{duration,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, 
-      #{create_timestamp,jdbcType=INTEGER}, #{update_time,jdbcType=TIMESTAMP})
+      #{packet_type,jdbcType=INTEGER}, #{sender_id,jdbcType=VARCHAR}, #{receiver_id,jdbcType=VARCHAR}, 
+      #{sender_name,jdbcType=VARCHAR}, #{receiver_name,jdbcType=VARCHAR}, #{sender_avatar,jdbcType=VARCHAR}, 
+      #{receiver_avatar,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{image_url,jdbcType=VARCHAR}, 
+      #{image_width,jdbcType=INTEGER}, #{image_height,jdbcType=INTEGER}, #{latitude,jdbcType=DOUBLE}, 
+      #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, 
+      #{audio_url,jdbcType=VARCHAR}, #{video_url,jdbcType=VARCHAR}, #{duration,jdbcType=INTEGER}, 
+      #{create_time,jdbcType=TIMESTAMP}, #{create_timestamp,jdbcType=INTEGER}, #{update_time,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chen.entity.OfflineMsg">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -77,6 +81,9 @@
       </if>
       <if test="msg_status != null">
         msg_status,
+      </if>
+      <if test="packet_type != null">
+        packet_type,
       </if>
       <if test="sender_id != null">
         sender_id,
@@ -99,9 +106,6 @@
       <if test="text != null">
         text,
       </if>
-      <if test="extra != null">
-        extra,
-      </if>
       <if test="image_url != null">
         image_url,
       </if>
@@ -113,6 +117,12 @@
       </if>
       <if test="latitude != null">
         latitude,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="address != null">
+        address,
       </if>
       <if test="longitude != null">
         longitude,
@@ -146,6 +156,9 @@
       <if test="msg_status != null">
         #{msg_status,jdbcType=INTEGER},
       </if>
+      <if test="packet_type != null">
+        #{packet_type,jdbcType=INTEGER},
+      </if>
       <if test="sender_id != null">
         #{sender_id,jdbcType=VARCHAR},
       </if>
@@ -167,9 +180,6 @@
       <if test="text != null">
         #{text,jdbcType=VARCHAR},
       </if>
-      <if test="extra != null">
-        #{extra,jdbcType=VARCHAR},
-      </if>
       <if test="image_url != null">
         #{image_url,jdbcType=VARCHAR},
       </if>
@@ -181,6 +191,12 @@
       </if>
       <if test="latitude != null">
         #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
       <if test="longitude != null">
         #{longitude,jdbcType=DOUBLE},

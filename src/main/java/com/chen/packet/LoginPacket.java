@@ -1,5 +1,6 @@
 package com.chen.packet;
 
+import com.chen.enums.PacketType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,18 +9,5 @@ import lombok.EqualsAndHashCode;
 public class LoginPacket extends AbstractPacket {
 
 	private String user_id;
-	private String phone;
-	private String nickname;
-	private String password;
-	private String avatar_small;
-	private String avatar_large;
-	private String open_id;
-	private String alipay_id;
-	private String gender;
-	  
-	@Override
-	public int getPacketType() {
-		return PacketType.PacketType_Login.getPacketType();
-	}
-
+	
 }

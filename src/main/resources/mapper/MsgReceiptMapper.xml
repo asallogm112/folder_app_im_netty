@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chen.mapper.extend.MsgReceiptMapperExtend">
-  <resultMap id="BaseResultMap" type="com.chen.packet.ReceiptPacket">
+  <resultMap id="BaseResultMap" type="com.chen.entity.MsgReceipt">
+    <result column="id" jdbcType="INTEGER" property="id" />
     <result column="msg_id" jdbcType="INTEGER" property="msg_id" />
     <result column="msg_type" jdbcType="INTEGER" property="msg_type" />
     <result column="msg_status" jdbcType="INTEGER" property="msg_status" />
     <result column="sender_id" jdbcType="VARCHAR" property="sender_id" />
     <result column="receiver_id" jdbcType="VARCHAR" property="receiver_id" />
   </resultMap>
-  <insert id="insert" parameterType="com.chen.packet.ReceiptPacket">
+  <insert id="insert" parameterType="com.chen.entity.MsgReceipt">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_msg_receipt (msg_id, msg_type, msg_status, 
       sender_id, receiver_id)
     values (#{msg_id,jdbcType=INTEGER}, #{msg_type,jdbcType=INTEGER}, #{msg_status,jdbcType=INTEGER}, 
       #{sender_id,jdbcType=VARCHAR}, #{receiver_id,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chen.packet.ReceiptPacket">
+  <insert id="insertSelective" parameterType="com.chen.entity.MsgReceipt">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_msg_receipt
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="msg_id != null">
@@ -51,5 +58,4 @@
       </if>
     </trim>
   </insert>
-  
 </mapper>

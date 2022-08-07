@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.chen</groupId>
-	<artifactId>app</artifactId>
+	<artifactId>app-im</artifactId>
 	<version>1.0</version>
 	<name>im_name_1021</name>
 	<description>im_chen</description>
@@ -75,6 +75,19 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
+		</dependency>
+
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>2.3.3.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.68</version>
 		</dependency>
 
 		<dependency>

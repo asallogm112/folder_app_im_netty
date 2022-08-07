@@ -11,6 +11,8 @@ public class OfflineMsg {
 
     private Integer msg_status;
 
+    private Integer packet_type;
+
     private String sender_id;
 
     private String receiver_id;
@@ -25,15 +27,17 @@ public class OfflineMsg {
 
     private String text;
 
-    private String extra;
-
-    private String image_url; 
+    private String image_url;
 
     private Integer image_width;
 
     private Integer image_height;
 
     private Double latitude;
+
+    private String name;
+
+    private String address;
 
     private Double longitude;
 
@@ -79,6 +83,14 @@ public class OfflineMsg {
 
     public void setMsg_status(Integer msg_status) {
         this.msg_status = msg_status;
+    }
+
+    public Integer getPacket_type() {
+        return packet_type;
+    }
+
+    public void setPacket_type(Integer packet_type) {
+        this.packet_type = packet_type;
     }
 
     public String getSender_id() {
@@ -137,14 +149,6 @@ public class OfflineMsg {
         this.text = text;
     }
 
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
-
     public String getImage_url() {
         return image_url;
     }
@@ -152,7 +156,7 @@ public class OfflineMsg {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
- 
+
     public Integer getImage_width() {
         return image_width;
     }
@@ -175,6 +179,22 @@ public class OfflineMsg {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Double getLongitude() {

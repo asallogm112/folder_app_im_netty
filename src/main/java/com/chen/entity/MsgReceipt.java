@@ -1,6 +1,8 @@
 package com.chen.entity;
 
 public class MsgReceipt {
+    private Integer id;
+
     private Integer msg_id;
 
     private Integer msg_type;
@@ -10,6 +12,14 @@ public class MsgReceipt {
     private String sender_id;
 
     private String receiver_id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getMsg_id() {
         return msg_id;

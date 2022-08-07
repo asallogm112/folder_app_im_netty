@@ -18,6 +18,8 @@ public class AsyncTask {
 	}
 	
 	public void addTask(Runnable task) {
+		System.err.println("addTask");
 		service.submit(task);
+		System.err.println("submit");
 	}
 }

@@ -1,10 +1,9 @@
 package com.chen.mapper;
 
-import com.chen.packet.ReceiptPacket;
+import com.chen.entity.MsgReceipt;
 
 public interface MsgReceiptMapper {
-    int insert(ReceiptPacket record);
+    int insert(MsgReceipt record);
 
-    int insertSelective(ReceiptPacket record);
-    
+    int insertSelective(MsgReceipt record);
 }
