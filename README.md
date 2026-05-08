@@ -23,4 +23,8 @@ es:
 sysctl -w vm.max_map_count=262144
 docker run -p 9200:9200 -p 9300:9300   -e "discovery.type=single-node" -itd 
 --name es  docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+
 # folder_app_im_netty
+
+
+=========手搓 netty 纪念代码============
